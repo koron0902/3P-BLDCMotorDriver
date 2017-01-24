@@ -122,33 +122,33 @@ namespace Middle {
 
 		BLDCMotorWithSensor::BLDCMotorWithSensor(){
 			direction = false;
-			HallSensorCallBack = [](HoleSensor::HoleStatus data, bool direction)->void{
-				using namespace HoleSensor;
+			HallSensorCallBack = [](HallSensor::HallStatus data, bool direction)->void{
+				using namespace HallSensor;
 				PWM::Signal nextSignal = PWM::Signal::AB;
 				switch(data){
 				/*
 				 * 参考URL
 				 * https://toshiba.semicon-storage.com/jp/design-support/e-learning/brushless_motor/chap4/1274636.html
 				 */
-					case HoleStatus::U:
+					case HallStatus::U:
 						nextSignal = PWM::Signal::CB;
 						break;
-					case HoleStatus::UV:
+					case HallStatus::UV:
 						nextSignal = PWM::Signal::CA;
 						break;
-					case HoleStatus::V:
+					case HallStatus::V:
 						nextSignal = PWM::Signal::BA;
 						break;
-					case HoleStatus::VW:
+					case HallStatus::VW:
 						nextSignal = PWM::Signal::BC;
 						break;
-					case HoleStatus::W:
+					case HallStatus::W:
 						nextSignal = PWM::Signal::AC;
 						break;
-					case HoleStatus::WU:
+					case HallStatus::WU:
 						nextSignal = PWM::Signal::AB;
 						break;
-					case HoleStatus::None:
+					case HallStatus::None:
 						break;
 					default:
 						break;
@@ -158,7 +158,7 @@ namespace Middle {
 				else
 					PWM::SetSignal(nextSignal);
 			};
-			HoleSensor::SetHandler(HallSensorCallBack);
+			HallSensor::SetHandler(HallSensorCallBack);
 			Free();
 		}
 
@@ -190,13 +190,13 @@ namespace Middle {
 			q32_t q = a.GetRaw() << 16;
 			auto s = sign(c);
 
-			HoleSensor::SetDirection(!s);
+			HallSensor::SetDirection(!s);
 			// モータ始動用に現在の位置から出力を決定する。
 			uint32_t data=0;
-			data |= Port::HoleU.Get()?0b001:0;
-			data |= Port::HoleV.Get()?0b010:0;
-			data |= Port::HoleW.Get()?0b100:0;
-			HallSensorCallBack((HoleSensor::HoleStatus)data, !s);
+			data |= Port::HallU.Get()?0b001:0;
+			data |= Port::HallV.Get()?0b010:0;
+			data |= Port::HallW.Get()?0b100:0;
+			HallSensorCallBack((HallSensor::HallStatus)data, !s);
 
 			PWM::SetDuty(q);
 		}

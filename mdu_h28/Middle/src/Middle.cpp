@@ -5,16 +5,16 @@
  *      Author: hamus
  */
 
+#include <HallSensor.hpp>
 #include <motor.hpp>
 #include "ff.hpp"
 #include "Middle.hpp"
 #include "ControllerBase.hpp"
 #include <cstring>
-#include <HoleSensor.hpp>
 namespace Middle {
 
 void Init(){
-	HoleSensor::Init();
+	HallSensor::Init();
 	Motor::Init();
 	Controller::SwitchControlMode(Controller::ControlMode_e::ModePID);
 }

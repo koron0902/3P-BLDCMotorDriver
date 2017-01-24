@@ -8,9 +8,9 @@
 #ifndef MIDDLE_MOTOR_H_
 #define MIDDLE_MOTOR_H_
 
+#include <HallSensor.hpp>
 #include <qmath.hpp>
 #include <stdint.h>
-#include <HoleSensor.hpp>
 
 namespace Middle {
 namespace Motor{
@@ -67,7 +67,7 @@ public :
 
 class BLDCMotorWithSensor: public IMotor{
 	Mode mMode;
-	std::function<void(HoleSensor::HoleStatus, bool)> HallSensorCallBack;
+	std::function<void(HallSensor::HallStatus, bool)> HallSensorCallBack;
 public:
 	bool direction;
 	BLDCMotorWithSensor();

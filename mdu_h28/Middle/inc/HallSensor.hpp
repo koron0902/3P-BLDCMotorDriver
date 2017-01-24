@@ -6,10 +6,10 @@
 #include <stdint.h>
 
 namespace Middle {
-namespace HoleSensor{
+namespace HallSensor{
 void Init();
 
-enum class HoleStatus:uint32_t{
+enum class HallStatus:uint32_t{
 	None=0b000,
 	U=0b001,
 	UV=0b011,
@@ -19,7 +19,7 @@ enum class HoleStatus:uint32_t{
 	WU=0b101
 };
 
-using HoleSensorHandler=std::function<void(HoleSensor::HoleStatus, bool)>;
+using HoleSensorHandler=std::function<void(HallSensor::HallStatus, bool)>;
 
 void SetHandler(const HoleSensorHandler&func=nullptr);
 void SetDirection(bool direction = true);

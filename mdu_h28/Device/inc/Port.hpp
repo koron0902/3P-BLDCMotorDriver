@@ -93,9 +93,9 @@ extern const PortData QEI_Y;
 extern const PortData UID;
 
 //Hole Sensors
-extern const PortData HoleU;
-extern const PortData HoleV;
-extern const PortData HoleW;
+extern const PortData HallU;
+extern const PortData HallV;
+extern const PortData HallW;
 
 void Init();
 
