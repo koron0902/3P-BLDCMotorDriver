@@ -121,7 +121,6 @@ namespace Middle {
 		}
 
 		BLDCMotorWithSensor::BLDCMotorWithSensor(){
-			direction = false;
 			HallSensorCallBack = [](HallSensor::HallStatus data, bool direction)->void{
 				using namespace HallSensor;
 				PWM::Signal nextSignal = PWM::Signal::AB;
@@ -131,22 +130,22 @@ namespace Middle {
 				 * https://toshiba.semicon-storage.com/jp/design-support/e-learning/brushless_motor/chap4/1274636.html
 				 */
 					case HallStatus::U:
-						nextSignal = PWM::Signal::CB;
-						break;
-					case HallStatus::UV:
 						nextSignal = PWM::Signal::CA;
 						break;
-					case HallStatus::V:
+					case HallStatus::UV:
 						nextSignal = PWM::Signal::BA;
 						break;
-					case HallStatus::VW:
+					case HallStatus::V:
 						nextSignal = PWM::Signal::BC;
 						break;
-					case HallStatus::W:
+					case HallStatus::VW:
 						nextSignal = PWM::Signal::AC;
 						break;
-					case HallStatus::WU:
+					case HallStatus::W:
 						nextSignal = PWM::Signal::AB;
+						break;
+					case HallStatus::WU:
+						nextSignal = PWM::Signal::CB;
 						break;
 					case HallStatus::None:
 						break;
@@ -190,13 +189,13 @@ namespace Middle {
 			q32_t q = a.GetRaw() << 16;
 			auto s = sign(c);
 
-			HallSensor::SetDirection(!s);
+			HallSensor::SetDirection(s);
 			// モータ始動用に現在の位置から出力を決定する。
 			uint32_t data=0;
 			data |= Port::HallU.Get()?0b001:0;
 			data |= Port::HallV.Get()?0b010:0;
 			data |= Port::HallW.Get()?0b100:0;
-			HallSensorCallBack((HallSensor::HallStatus)data, !s);
+			HallSensorCallBack((HallSensor::HallStatus)data, s);
 
 			PWM::SetDuty(q);
 		}

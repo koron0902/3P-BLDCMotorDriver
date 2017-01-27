@@ -69,7 +69,6 @@ class BLDCMotorWithSensor: public IMotor{
 	Mode mMode;
 	std::function<void(HallSensor::HallStatus, bool)> HallSensorCallBack;
 public:
-	bool direction;
 	BLDCMotorWithSensor();
 	BLDCMotorWithSensor(const BLDCMotorWithSensor&) = default;
 	virtual ~BLDCMotorWithSensor();
