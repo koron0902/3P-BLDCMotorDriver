@@ -25,7 +25,7 @@ void Init(){
 	Timer::Init();
 	PWM::Init();
 	Uart::Init();
-	QEI::Init();
+	QEI::Init(10000);
 	ADC::Init();
 	USB::Init();
 	SPI::Init();
